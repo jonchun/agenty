@@ -22,7 +22,7 @@ from agenty.pipeline import Pipeline
 import agenty.exceptions as exc
 
 from .meta import AgentMeta
-from .chat_history import ChatHistory
+from .chat_history import ChatHistory, ChatMessage
 
 __all__ = ["Agent", "EndStrategy"]
 
@@ -146,10 +146,14 @@ class Agent(Generic[AgentInputT, AgentOutputT], metaclass=AgentMeta):
                 raise exc.AgentyTypeError(e)
             self.chat_history.add("user", _input_data, name=name)
 
+        system_prompt = ChatMessage(
+            role="system", content=self.system_prompt
+        ).to_pydantic_ai(ctx=self.template_context())
+
         try:
             output = await self.pai_agent.run(
                 str(_input_data),
-                message_history=_chat_history,
+                message_history=[system_prompt] + _chat_history,
                 deps=self,
             )
         except pai.exceptions.UnexpectedModelBehavior as e:
