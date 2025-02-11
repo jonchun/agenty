@@ -1,6 +1,6 @@
 [project]
 name = "agenty"
-version = "0.2.0"
+version = "0.2.1"
 description = "A framework for creating AI agents."
 authors = [{ name = "Jonathan Chun", email = "git@jonathanchun.com" }]
 requires-python = ">=3.12,<4.0"
