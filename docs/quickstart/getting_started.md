@@ -9,7 +9,7 @@ Here's a simple example to get started:
 ```python
 import asyncio
 from agenty import Agent
-from pydantic_ai.models.openai import OpenAIModel
+from agenty.models import OpenAIModel
 
 async def main():
     agent = Agent(
@@ -33,7 +33,7 @@ For most use cases, you'll want to create your own class that inherits from `Age
 ```python
 import asyncio
 from agenty import Agent
-from pydantic_ai.models.openai import OpenAIModel
+from agenty.models import OpenAIModel
 
 class Assistant(Agent):
     model = OpenAIModel("gpt-4", api_key="your-api-key")
@@ -55,16 +55,16 @@ You can enhance your agent with tools using a simple decorator pattern:
 import asyncio
 import random
 from agenty import Agent, tool
-from pydantic_ai.models.openai import OpenAIModel
+from agenty.models import OpenAIModel
 
 class GameAgent(Agent):
     model = OpenAIModel("gpt-4", api_key="your-api-key")
     system_prompt = "You're a dice game. Use the roll_die tool when asked to roll."
-    
+
     def __init__(self, num_sides: int = 6, **kwargs):
         super().__init__(**kwargs)
         self.num_sides = num_sides
-    
+
     @tool
     def roll_die(self) -> int:
         """Roll a die and return the result."""
@@ -85,7 +85,7 @@ It's recommended to use environment variables for API keys:
 ```python
 import os
 from agenty import Agent
-from pydantic_ai.models.openai import OpenAIModel
+from agenty.models import OpenAIModel
 
 class Assistant(Agent):
     model = OpenAIModel(
@@ -97,7 +97,7 @@ class Assistant(Agent):
 
 ### Next Steps
 
-- Learn about [Agent Configuration](../documentation/agent_configuration.md)
-- Explore [Tools](../documentation/tools.md) and learn more
-- Ensure type safety with [Structured I/O](../documentation/structured_io.md)
-- Read about [Pipelines](../documentation/pipelines.md) for complex workflows
+-   Learn about [Agent Configuration](../documentation/agent_configuration.md)
+-   Explore [Tools](../documentation/tools.md) and learn more
+-   Ensure type safety with [Structured I/O](../documentation/structured_io.md)
+-   Read about [Pipelines](../documentation/pipelines.md) for complex workflows

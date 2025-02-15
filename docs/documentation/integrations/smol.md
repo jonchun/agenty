@@ -30,7 +30,7 @@ Here's a basic example of using `CodeAgent` with OpenAI:
 ```python
 import asyncio
 import os
-from pydantic_ai.models.openai import OpenAIModel
+from agenty.models import OpenAIModel
 from agenty.integrations.smol import CodeAgent
 from agenty.integrations.smol.tools import DuckDuckGoSearchTool, PythonInterpreterTool
 

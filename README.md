@@ -5,17 +5,19 @@ A Pythonic framework for building AI agents and LLM pipelines, powered by [pydan
 📚 **[Documentation](https://agenty.readthedocs.io/)**
 
 > [!Caution]
-> **Initial Development**: Agenty is under active development. Expect frequent breaking changes until we reach a stable release.
+> Agenty is under active development. Expect frequent breaking changes until we reach a stable release.
 
 Agenty provides a clean, type-safe interface for creating:
-- Conversational AI agents with structured inputs and outputs
-- LLM pipelines
-- Complex agent interactions with minimal boilerplate
+
+-   Conversational AI agents with structured inputs and outputs
+-   LLM pipelines
+-   Complex agent interactions with minimal boilerplate
 
 ## Key Features
-- Built on pydantic-ai for type validation
-- Automatic conversation history management
-- Intuitive Pythonic interfaces
+
+-   Built on pydantic-ai for type validation
+-   Automatic conversation history management
+-   Intuitive Pythonic interfaces
 
 The framework is currently only officially tested with the OpenAI API (through a proxy such as [LiteLLM](https://docs.litellm.ai/docs/simple_proxy)/[OpenRouter](https://openrouter.ai/docs/quick-start)) although theoretically it supports all the models supported by pydantic-ai.
 
@@ -37,10 +39,11 @@ uv add agenty
 ## Quick Preview
 
 Here's a simple example to get started:
+
 ```python
 import asyncio
 from agenty import Agent
-from pydantic_ai.models.openai import OpenAIModel
+from agenty.models import OpenAIModel
 
 async def main():
     agent = Agent(
@@ -56,11 +59,13 @@ async def main():
 
 asyncio.run(main())
 ```
+
 In most cases, to build a custom AI agent, you'll want to create your own class that inherits from `Agent.` The below is functionally equivalent to the above code (and is the recommended way to use this framework)
+
 ```python
 import asyncio
 from agenty import Agent
-from pydantic_ai.models.openai import OpenAIModel
+from agenty.models import OpenAIModel
 
 class Assistant(Agent):
     model = OpenAIModel("gpt-4o", api_key="your-api-key")
@@ -73,10 +78,13 @@ async def main():
 
 asyncio.run(main())
 ```
+
 ---
 
 ### Tools
+
 Add capabilities to your agents with simple decorators:
+
 ```python
 class WeatherAgent(Agent):
     system_prompt = "You help users check the weather."
@@ -96,9 +104,13 @@ class WeatherAgent(Agent):
         """Get the configured location."""
         return self.location
 ```
+
 ---
+
 ### Structured I/O
+
 Define type-safe inputs and outputs for predictable behavior:
+
 ```python
 from agenty import Agent
 from agenty.types import BaseIO
@@ -117,7 +129,9 @@ class UserExtractor(Agent[str, User]):
 ---
 
 ### Agent Pipelines
+
 Chain multiple agents together for complex workflows:
+
 ```python
 class TextCleaner(Agent[str, str]):
     model = OpenAIModel("gpt-4o-mini", api_key="your-api-key")
@@ -134,9 +148,10 @@ result = await pipeline.run("This is my input text!")
 
 ---
 
-
 ### Templates
+
 Create dynamic prompts with Jinja templates:
+
 ```python
 class DynamicGreeter(Agent):
     system_prompt = """
@@ -151,23 +166,27 @@ class DynamicGreeter(Agent):
 ---
 
 ### Hooks
+
 Transform inputs and outputs with hooks:
+
 ```python
 class MyAgent(Agent[str, str]):
     @hook.input
     def add_prefix(self, input: str) -> str:
         return f"prefix_{input}"
-        
-    @hook.output 
+
+    @hook.output
     def add_suffix(self, output: str) -> str:
         return f"{output}_suffix"
 ```
 
 ### 📚 Like what you see? **[Read the Documentation](https://agenty.readthedocs.io/)** to learn more!
+
 ---
+
 ## Requirements
 
-- Python >= 3.12
+-   Python >= 3.12
 
 ## License
 
